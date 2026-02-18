@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}My Bookings - EventManager{% endblock %}
+
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-ticket"></i> My Bookings</h2>
+
+{% if bookings %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Guests</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.pk }}</td>
+                <td><a href="{% url 'events:event_detail' booking.event.slug %}">{{ booking.event.title }}</a></td>
+                <td>{{ booking.booking_date|date:"M d, Y" }}</td>
+                <td>{{ booking.number_of_guests }}</td>
+                <td>Rs.{{ booking.total_amount }}</td>
+                <td><span class="badge badge-{{ booking.status }}">{{ booking.get_status_display }}</span></td>
+                <td>
+                    {% if booking.payment %}
+                        <span class="badge bg-{{ booking.payment.status|default:'secondary' }}">{{ booking.payment.get_status_display }}</span>
+                    {% else %}
+                        <span class="badge bg-secondary">No Payment</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'events:booking_detail' booking.pk %}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>
+                    {% if booking.status == 'pending' %}
+                        <a href="{% url 'events:payment_checkout' booking.pk %}" class="btn btn-outline-success btn-sm"><i class="bi bi-credit-card"></i></a>
+                        <a href="{% url 'events:booking_cancel' booking.pk %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Cancel this booking?')"><i class="bi bi-x"></i></a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <i class="bi bi-ticket"></i>
+    <h4>No Bookings Yet</h4>
+    <p>You haven't booked any events yet.</p>
+    <a href="{% url 'events:event_list' %}" class="btn btn-primary">Browse Events</a>
+</div>
+{% endif %}
+{% endblock %}

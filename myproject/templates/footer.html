@@ -1,0 +1,32 @@
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <h5><i class="bi bi-calendar-event"></i> EventManager</h5>
+                <p class="text-muted">Your one-stop solution for discovering and booking amazing events. From weddings to corporate meetings, we've got you covered.</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'events:home' %}" class="text-muted text-decoration-none">Home</a></li>
+                    <li><a href="{% url 'events:event_list' %}" class="text-muted text-decoration-none">Browse Events</a></li>
+                    <li><a href="{% url 'events:about' %}" class="text-muted text-decoration-none">About Us</a></li>
+                    <li><a href="{% url 'events:contact' %}" class="text-muted text-decoration-none">Contact</a></li>
+                    <li><a href="{% url 'events:faq' %}" class="text-muted text-decoration-none">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Contact Info</h5>
+                <ul class="list-unstyled text-muted">
+                    <li><i class="bi bi-envelope"></i> info@eventmanager.com</li>
+                    <li><i class="bi bi-phone"></i> +91 98765 43210</li>
+                    <li><i class="bi bi-geo-alt"></i> Bangalore, India</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <div class="text-center text-muted">
+            <small>&copy; 2026 EventManager. All rights reserved.</small>
+        </div>
+    </div>
+</footer>

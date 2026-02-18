@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register - EventManager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h2 class="text-center mb-4"><i class="bi bi-person-plus"></i> Register</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Create Account</button>
+                </form>
+                <hr>
+                <p class="text-center mb-0">Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

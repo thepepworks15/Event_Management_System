@@ -1,0 +1,73 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'events:home' %}">
+            <i class="bi bi-calendar-event"></i> EventManager
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'events:home' %}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        Events
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'events:event_list' %}">All Events</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        {% for category in all_categories %}
+                        <li><a class="dropdown-item" href="{% url 'events:events_by_category' category.slug %}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'events:about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'events:contact' %}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'events:faq' %}">FAQ</a>
+                </li>
+            </ul>
+            <form class="d-flex me-3" method="GET" action="{% url 'events:event_list' %}">
+                <input class="form-control form-control-sm me-2" type="search" name="q" placeholder="Search events..." value="{{ request.GET.q }}">
+                <button class="btn btn-outline-light btn-sm" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'events:admin_dashboard' %}"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'events:event_create' %}"><i class="bi bi-plus-circle"></i> Add Event</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="bi bi-person"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'events:booking_history' %}"><i class="bi bi-ticket"></i> My Bookings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:logout' %}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary btn-sm text-white ms-2 px-3" href="{% url 'accounts:register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Browse Events - EventManager{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">
+    {% if current_category %}
+        {{ current_category.name }} Events
+    {% else %}
+        Browse Events
+    {% endif %}
+</h2>
+
+<div class="row">
+    <!-- Filter Sidebar -->
+    <div class="col-md-3 mb-4">
+        <div class="card filter-card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-funnel"></i> Filters</h5>
+                <form method="GET" action="{% url 'events:event_list' %}">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Search</label>
+                        <input type="text" name="q" class="form-control form-control-sm" value="{{ request.GET.q }}" placeholder="Search events...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Category</label>
+                        <select name="category" class="form-select form-select-sm">
+                            <option value="">All Categories</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat.slug }}" {% if request.GET.category == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Location</label>
+                        <input type="text" name="location" class="form-control form-control-sm" value="{{ request.GET.location }}" placeholder="City or venue...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Date</label>
+                        <input type="date" name="date" class="form-control form-control-sm" value="{{ request.GET.date }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Price Range</label>
+                        <select name="price_range" class="form-select form-select-sm">
+                            <option value="">Any Price</option>
+                            <option value="0-1000" {% if request.GET.price_range == '0-1000' %}selected{% endif %}>Under Rs.1,000</option>
+                            <option value="1000-5000" {% if request.GET.price_range == '1000-5000' %}selected{% endif %}>Rs.1,000 - Rs.5,000</option>
+                            <option value="5000-10000" {% if request.GET.price_range == '5000-10000' %}selected{% endif %}>Rs.5,000 - Rs.10,000</option>
+                            <option value="10000+" {% if request.GET.price_range == '10000+' %}selected{% endif %}>Rs.10,000+</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 btn-sm"><i class="bi bi-search"></i> Apply Filters</button>
+                    <a href="{% url 'events:event_list' %}" class="btn btn-outline-secondary w-100 btn-sm mt-2">Clear Filters</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Grid -->
+    <div class="col-md-9">
+        {% if events %}
+        <div class="row g-4">
+            {% for event in events %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card event-card shadow-sm h-100">
+                    {% if event.image %}
+                        <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.title }}">
+                    {% else %}
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height:200px;">
+                            <i class="bi bi-calendar-event text-white" style="font-size:3rem;"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">{{ event.category.name }}</span>
+                        {% if event.average_rating > 0 %}
+                        <span class="badge bg-warning text-dark"><i class="bi bi-star-fill"></i> {{ event.average_rating }}</span>
+                        {% endif %}
+                        <h5 class="card-title">{{ event.title }}</h5>
+                        <p class="text-muted small mb-1"><i class="bi bi-geo-alt"></i> {{ event.location }}</p>
+                        <p class="text-muted small mb-1"><i class="bi bi-calendar"></i> {{ event.date|date:"M d, Y" }}</p>
+                        <p class="text-muted small"><i class="bi bi-people"></i> {{ event.available_slots }} slots left</p>
+                    </div>
+                    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-primary">Rs.{{ event.price }}</span>
+                        <a href="{% url 'events:event_detail' event.slug %}" class="btn btn-outline-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-calendar-x"></i>
+            <h4>No Events Found</h4>
+            <p>Try adjusting your filters or search terms.</p>
+            <a href="{% url 'events:event_list' %}" class="btn btn-primary">View All Events</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

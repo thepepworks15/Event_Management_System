@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Book {{ event.title }} - EventManager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h2><i class="bi bi-ticket"></i> Book Event</h2>
+                        <hr>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <div class="alert alert-info mt-3">
+                                <strong>Price per person:</strong> Rs.{{ event.price }}<br>
+                                <strong>Available slots:</strong> {{ event.available_slots }}
+                            </div>
+                            <button type="submit" class="btn btn-book w-100"><i class="bi bi-check-circle"></i> Proceed to Payment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5>Event Summary</h5>
+                        <hr>
+                        <p><strong>{{ event.title }}</strong></p>
+                        <p class="text-muted small">
+                            <i class="bi bi-geo-alt"></i> {{ event.location }}<br>
+                            <i class="bi bi-calendar"></i> {{ event.date|date:"F d, Y" }}<br>
+                            <i class="bi bi-clock"></i> {{ event.time|time:"h:i A" }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

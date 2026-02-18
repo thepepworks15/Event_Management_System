@@ -1,0 +1,139 @@
+/* Event Management System - Custom Styles */
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+    color: white;
+    padding: 80px 0;
+}
+
+/* Event Cards */
+.event-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.event-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Category Cards */
+.category-card {
+    transition: transform 0.2s;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Star Ratings */
+.star-rating .bi-star-fill {
+    color: #ffc107;
+}
+
+.star-rating .bi-star {
+    color: #dee2e6;
+}
+
+/* Profile Picture */
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #0d6efd;
+}
+
+/* Dashboard Stats Cards */
+.stats-card {
+    border: none;
+    border-radius: 12px;
+    padding: 20px;
+    color: white;
+}
+
+.stats-card.bg-primary-gradient {
+    background: linear-gradient(135deg, #0d6efd, #0a58ca);
+}
+
+.stats-card.bg-success-gradient {
+    background: linear-gradient(135deg, #198754, #146c43);
+}
+
+.stats-card.bg-warning-gradient {
+    background: linear-gradient(135deg, #ffc107, #e0a800);
+}
+
+.stats-card.bg-info-gradient {
+    background: linear-gradient(135deg, #0dcaf0, #0aa2c0);
+}
+
+/* Filter Sidebar */
+.filter-card {
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+/* Booking Status Badges */
+.badge-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-confirmed {
+    background-color: #198754;
+}
+
+.badge-cancelled {
+    background-color: #dc3545;
+}
+
+/* Payment Card */
+.payment-card {
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 12px;
+}
+
+/* FAQ Accordion */
+.faq-accordion .accordion-button:not(.collapsed) {
+    background-color: #e7f1ff;
+    color: #0d6efd;
+}
+
+/* Custom Button Styles */
+.btn-book {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+}
+
+.btn-book:hover {
+    background: linear-gradient(135deg, #0a58ca, #520dc2);
+    color: white;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}

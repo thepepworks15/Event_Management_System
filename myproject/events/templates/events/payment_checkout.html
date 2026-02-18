@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment - EventManager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card payment-card shadow-sm">
+            <div class="card-body p-4">
+                <h2 class="text-center"><i class="bi bi-credit-card"></i> Payment</h2>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr><th>Event</th><td>{{ booking.event.title }}</td></tr>
+                        <tr><th>Date</th><td>{{ booking.booking_date|date:"F d, Y" }}</td></tr>
+                        <tr><th>Guests</th><td>{{ booking.number_of_guests }}</td></tr>
+                        <tr><th>Total Amount</th><td class="fw-bold text-primary">Rs.{{ booking.total_amount }}</td></tr>
+                    </table>
+                </div>
+                <button id="pay-btn" class="btn btn-book w-100"><i class="bi bi-shield-check"></i> Pay with Razorpay</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{ razorpay_key_id }}",
+        "amount": "{{ amount }}",
+        "currency": "{{ currency }}",
+        "name": "EventManager",
+        "description": "Booking for {{ booking.event.title }}",
+        "order_id": "{{ razorpay_order_id }}",
+        "callback_url": "{% url 'events:payment_callback' %}",
+        "prefill": {
+            "name": "{{ request.user.get_full_name }}",
+            "email": "{{ request.user.email }}"
+        },
+        "theme": {"color": "#0d6efd"}
+    };
+    var rzp = new Razorpay(options);
+    document.getElementById("pay-btn").onclick = function(e) {
+        rzp.open();
+        e.preventDefault();
+    };
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Contact Us - EventManager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h2><i class="bi bi-envelope"></i> Contact Us</h2>
+                        <p class="text-muted">Have a question? We'd love to hear from you.</p>
+                        <hr>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" class="btn btn-primary w-100 mt-3"><i class="bi bi-send"></i> Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h5>Get in Touch</h5>
+                        <hr>
+                        <p><i class="bi bi-envelope text-primary"></i> info@eventmanager.com</p>
+                        <p><i class="bi bi-phone text-primary"></i> +91 98765 43210</p>
+                        <p><i class="bi bi-geo-alt text-primary"></i> Bangalore, India</p>
+                        <p><i class="bi bi-clock text-primary"></i> Mon-Sat: 9AM - 6PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
